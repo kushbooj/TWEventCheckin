@@ -77,13 +77,22 @@ class EventsController < ApplicationController
           module_px_size: 6,
           file: nil # path to write
       )
+
+      io = StringIO.new
+      qrcode.write(io)
+      io.rewind
+
       mail = Mail.new do
         from    'kushbooj@thoughtworks.com'
         to      participant.email
-        subject 'Scan the code for hassle free entry in'
-        body    qrcode.to_s
+        subject 'Event QR Code'
+        body    'Scan the code for hassle free entry in'
       end
 
+      mail.attachments['qrcode.png'] = {
+          :mime_type => 'image/png',
+          :content => io.read
+      }
       mail.delivery_method :sendmail
 
       mail.deliver
