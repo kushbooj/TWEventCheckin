@@ -1,5 +1,6 @@
 class ParticipantsController < ApplicationController
   before_action :set_participant, only: [:show, :edit, :update, :destroy]
+  skip_before_filter :verify_authenticity_token
 
   # GET /participants
   # GET /participants.json
@@ -20,6 +21,14 @@ class ParticipantsController < ApplicationController
   # GET /participants/1/edit
   def edit
   end
+
+  def import
+    Event.create(name: 'GeekNight', edition: 1)
+    participants = array_from_csv Rails.root.join("participants.csv")
+    participants.each { |participant| Participant.create(participant.to_hash) }
+
+  end
+
 
   # POST /participants
   # POST /participants.json
@@ -62,13 +71,20 @@ class ParticipantsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_participant
-      @participant = Participant.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_participant
+    @participant = Participant.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def participant_params
-      params.require(:participant).permit(:name, :email, :contact_number, :from, :event_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def participant_params
+    params.require(:participant).permit(:name, :email, :contact_number, :from, :event_id)
+  end
+
+  def array_from_csv csv_file_name
+    require 'csv'
+    csv_file = File.read csv_file_name
+    records = CSV.parse(csv_file, :headers => true)
+    records .collect { |record| record }
+  end
 end
