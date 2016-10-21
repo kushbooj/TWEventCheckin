@@ -5,3 +5,5 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+events = Event.create({:name => 'vodQA', :edition => 1, :date => DateTime.now})
+Participant.create({:name => 'kushboo', :email => 'kushbooj@thoughtworks.com', :contact_number => '9840171038', :from => 'ThoughtWorks', :event => events.first})

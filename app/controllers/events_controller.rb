@@ -1,5 +1,6 @@
+require 'rqrcode'
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :generate]
 
   # GET /events
   # GET /events.json
@@ -58,6 +59,15 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def generate
+    participants = Participant.all.select { |m| m.event_id == @event.id }
+    pp participants
+    participants.each do |participant|
+      qrcode = RQRCode::QRCode.new(participant.email + @event.id.to_s, :size => 4, :level => :h)
+      QrCode.create({:event => @event, :participant => participant, :code => qrcode})
     end
   end
 
