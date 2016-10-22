@@ -1,3 +1,4 @@
+include SecureRandom
 class QrCodesController < ApplicationController
   before_action :set_qr_code, only: [:show, :edit, :update, :destroy]
 

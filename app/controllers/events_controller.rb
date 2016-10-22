@@ -67,7 +67,9 @@ class EventsController < ApplicationController
     participants = Participant.all.select { |m| m.event_id == @event.id }
     pp participants
     participants.each do |participant|
-      qrcode = RQRCode::QRCode.new(participant.email + @event.id.to_s, :size => 4, :level => :h).as_png(
+      uuid = SecureRandom.uuid
+      @qr_code = QrCode.create({:event_id => @event.id, :participant_id => participant.id, :code => uuid})
+      qrcode = RQRCode::QRCode.new(uuid, :size => 10, :level => :h).as_png(
           resize_gte_to: false,
           resize_exactly_to: false,
           fill: 'white',
@@ -83,10 +85,10 @@ class EventsController < ApplicationController
       io.rewind
 
       mail = Mail.new do
-        from    'kushbooj@thoughtworks.com'
-        to      participant.email
+        from 'kushbooj@thoughtworks.com'
+        to participant.email
         subject 'Event QR Code'
-        body    'Scan the code for hassle free entry in'
+        body 'Scan the code for hassle free entry in'
       end
 
       mail.attachments['qrcode.png'] = {
