@@ -63,22 +63,24 @@ class QrCodesController < ApplicationController
   end
 
   def checkin
-    qr_code = QrCode.find(:uuid => params[:uuid]);
-    if(!qr_code.nil?)
-      format.json { render json: @qr_code.errors, status: :ok }
-    else
-      format.json { render json: @qr_code.errors, status: :not_found }
-    end
+    qr_code = QrCode.find_by(:code => params[:uuid])
+    respond_to { |format|
+      if not qr_code.nil?
+        format.json { head :no_content, status: :ok }
+      else
+        format.json { render json: @qr_code.errors, status: :not_found }
+      end
+    }
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_qr_code
-      @qr_code = QrCode.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_qr_code
+    @qr_code = QrCode.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def qr_code_params
-      params.require(:qr_code).permit(:code, :event_id, :participant_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def qr_code_params
+    params.require(:qr_code).permit(:code, :event_id, :participant_id)
+  end
 end
