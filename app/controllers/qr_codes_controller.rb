@@ -62,6 +62,15 @@ class QrCodesController < ApplicationController
     end
   end
 
+  def checkin
+    qr_code = QrCode.find(:uuid => params[:uuid]);
+    if(!qr_code.nil?)
+      format.json { render json: @qr_code.errors, status: :ok }
+    else
+      format.json { render json: @qr_code.errors, status: :not_found }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_qr_code

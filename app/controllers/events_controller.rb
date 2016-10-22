@@ -69,7 +69,8 @@ class EventsController < ApplicationController
     participants.each do |participant|
       uuid = SecureRandom.uuid
       @qr_code = QrCode.create({:event_id => @event.id, :participant_id => participant.id, :code => uuid})
-      qrcode = RQRCode::QRCode.new(uuid, :size => 10, :level => :h).as_png(
+      generated_qr_code = RQRCode::QRCode.new(uuid)
+      qrcode = generated_qr_code.as_png(
           resize_gte_to: false,
           resize_exactly_to: false,
           fill: 'white',
@@ -79,7 +80,6 @@ class EventsController < ApplicationController
           module_px_size: 6,
           file: nil # path to write
       )
-
       io = StringIO.new
       qrcode.write(io)
       io.rewind
@@ -102,13 +102,13 @@ class EventsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event
-      @event = Event.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event
+    @event = Event.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def event_params
-      params.require(:event).permit(:name, :edition, :date)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def event_params
+    params.require(:event).permit(:name, :edition, :date)
+  end
 end
