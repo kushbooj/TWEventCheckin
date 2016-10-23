@@ -66,7 +66,10 @@ class QrCodesController < ApplicationController
     qr_code = QrCode.find_by(:code => params[:uuid])
     respond_to { |format|
       if not qr_code.nil?
-        format.json { head :no_content, status: :ok }
+        participant = qr_code.participant
+        participant.update_attribute(:attended, true)
+        checkin_response = {event: qr_code.event.name, participant: participant.name}
+        format.json { render json: checkin_response, status: :ok }
       else
         format.json { render json: @qr_code.errors, status: :not_found }
       end
