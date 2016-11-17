@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :qr_codes
   resources :participants
   resources :events
   post '/events/:id/generate', to: 'events#generate'
