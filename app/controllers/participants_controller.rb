@@ -25,8 +25,11 @@ class ParticipantsController < ApplicationController
 
   def import
     file = params[:file]
+    event_id = params[:event]['event_id']
     CSV.foreach(file.path, headers: true) do |participant|
-      Participant.create!(participant.to_hash)
+      participant_data = participant.to_hash
+      participant_data['event_id'] = event_id
+      Participant.create!(participant_data)
     end
   end
 
