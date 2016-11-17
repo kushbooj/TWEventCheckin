@@ -15,5 +15,10 @@
   <%= @event.date %>
 </p>
 
+<%= form_tag({:action => :generate}, multipart: true) do %>
+    <%= hidden_field_tag :event %>
+    <%= submit_tag "Generate and Send QR Codes" %>
+<% end %>
+
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>
