@@ -1,4 +1,5 @@
 class ParticipantsController < ApplicationController
+  require 'csv'
   before_action :set_participant, only: [:show, :edit, :update, :destroy]
   skip_before_filter :verify_authenticity_token
 
@@ -23,12 +24,11 @@ class ParticipantsController < ApplicationController
   end
 
   def import
-    Event.create(name: 'GeekNight', edition: 1)
-    participants = array_from_csv Rails.root.join("participants.csv")
-    participants.each { |participant| Participant.create(participant.to_hash) }
-
+    file = params[:file]
+    CSV.foreach(file.path, headers: true) do |participant|
+      Participant.create!(participant.to_hash)
+    end
   end
-
 
   # POST /participants
   # POST /participants.json
