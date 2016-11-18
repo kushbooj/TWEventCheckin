@@ -1,24 +1,31 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <%= tabs_tag :open_tabs => {:id => 'tabs', :class => 'nav nav-tabs top-margin-20'} do |tab| %>
+      <%= tab.event 'Events', root_path, :class => 'nav-item' %>
+      <%= tab.participant 'Participants', '/participants', :class => 'nav-item' %>
+  <% end %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @event.name %>
-</p>
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Edition:</strong>
-  <%= @event.edition %>
-</p>
+  <p>
+    <strong>Name:</strong>
+    <%= @event.name %>
+  </p>
 
-<p>
-  <strong>Date:</strong>
-  <%= @event.date %>
-</p>
+  <p>
+    <strong>Edition:</strong>
+    <%= @event.edition %>
+  </p>
 
-<%= form_tag({:action => :generate}, multipart: true) do %>
-    <%= hidden_field_tag :event %>
-    <%= submit_tag "Generate and Send QR Codes", :class => 'btn btn-primary' %>
-<% end %>
+  <p>
+    <strong>Date:</strong>
+    <%= @event.date %>
+  </p>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+  <%= form_tag({:action => :generate}, multipart: true) do %>
+      <%= hidden_field_tag :event %>
+      <%= submit_tag "Generate and Send QR Codes", :class => 'btn btn-primary' %>
+  <% end %>
+
+  <%= link_to 'Edit', edit_event_path(@event) %> |
+  <%= link_to 'Back', events_path %>
+</div>

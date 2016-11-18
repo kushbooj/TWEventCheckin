@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'events#index'
   resources :participants
   resources :events
   post '/events/:id/generate', to: 'events#generate'

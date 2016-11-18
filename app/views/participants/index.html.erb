@@ -1,4 +1,8 @@
 <div class="container">
+  <%= tabs_tag :open_tabs => {:id => 'tabs', :class => 'nav nav-tabs top-margin-20'} do |tab| %>
+      <%= tab.event 'Events', root_path, :class => 'nav-item' %>
+      <%= tab.participant 'Participants', '/participants', :class => 'nav-item' %>
+  <% end %>
   <p id="notice"><%= notice %></p>
 
   <h1>Participants</h1>
