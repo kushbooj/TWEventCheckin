@@ -1,4 +1,5 @@
-<div class="container"><p id="notice"><%= notice %></p>
+<div class="container">
+  <p id="notice"><%= notice %></p>
 
   <h1>Participants</h1>
 
@@ -40,9 +41,17 @@
 
 
   <h3> Import Participants</h3>
-  <%= form_tag({:action => :import}, multipart: true) do %>
-      <%= collection_select(:event, :event_id, Event.all, :id, :name_with_edition, prompt: true) %>
-      <%= file_field_tag :file %>
-      <%= submit_tag "Import", :class => 'btn btn-primary' %>
+  <%= form_tag({:action => :import}, {multipart: true}) do %>
+      <div class="form-group">
+        <label>Select an event</label>
+        <%= collection_select(:event, :event_id, Event.all, :id, :name_with_edition, prompt: true) %>
+      </div>
+      <div class="form-group">
+        <label>Choose a file to upload participants</label>
+        <%= file_field_tag :file %>
+      </div>
+      <div class="form-group">
+        <%= submit_tag "Import", :class => 'btn btn-primary' %>
+      </div>
   <% end %>
 </div>
