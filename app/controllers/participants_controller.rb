@@ -26,12 +26,24 @@ class ParticipantsController < ApplicationController
 
   def import
     file = params[:file]
+
+    if file.nil?
+      redirect_to '/participants', notice: 'No File Selected'
+      return
+    end
     event_id = params[:event]['event_id']
+
+    if event_id.nil? || event_id == 0 || event_id == ''
+      redirect_to '/participants', notice: 'Event not selected'
+      return
+    end
+
     CSV.foreach(file.path, headers: true) do |participant|
       participant_data = participant.to_hash
       participant_data['event_id'] = event_id
       Participant.create!(participant_data)
     end
+    redirect_to '/participants', notice: 'Successfully imported participants'
   end
 
   # POST /participants

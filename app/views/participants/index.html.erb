@@ -3,7 +3,8 @@
       <%= tab.event 'Events', root_path, :class => 'nav-item' %>
       <%= tab.participant 'Participants', '/participants', :class => 'nav-item' %>
   <% end %>
-  <p id="notice"><%= notice %></p>
+
+  <p id="notice" class="success top-margin-20"><%= notice %></p>
 
   <h1>Participants</h1>
 
@@ -52,7 +53,7 @@
       </div>
       <div class="form-group">
         <label>Choose a file to upload participants</label>
-        <%= file_field_tag :file %>
+        <%= file_field_tag :file, accept: 'text/csv'%>
       </div>
       <div class="form-group">
         <%= submit_tag "Import", :class => 'btn btn-primary' %>
