@@ -1,12 +1,15 @@
 <div class="container">
-  <%= tabs_tag :open_tabs => {:id => 'tabs', :class => 'nav nav-tabs top-margin-20'} do |tab| %>
-      <%= tab.event 'Events', root_path, :class => 'nav-item' %>
-      <%= tab.participant 'Participants', '/participants', :class => 'nav-item' %>
-  <% end %>
-  <h1>Editing Participant</h1>
+  <ul class="nav nav-tabs">
+    <li><a href="/"> Events </a></li>
+    <li class="active"><a href="/participants"> Participants </a></li>
+  </ul>
 
-  <%= render 'form', participant: @participant %>
+  <div class="tab-content">
+    <h1>Editing Participant</h1>
 
-  <%= link_to 'Show', @participant %> |
-  <%= link_to 'Back', participants_path %>
+    <%= render 'form', participant: @participant %>
+
+    <%= link_to 'Show', @participant %> |
+    <%= link_to 'Back', participants_path %>
+  </div>
 </div>

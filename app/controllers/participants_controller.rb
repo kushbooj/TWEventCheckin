@@ -1,6 +1,5 @@
 class ParticipantsController < ApplicationController
   require 'csv'
-  set_tab :participant
   before_action :set_participant, only: [:show, :edit, :update, :destroy]
   skip_before_filter :verify_authenticity_token
 

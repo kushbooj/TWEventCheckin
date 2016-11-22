@@ -1,31 +1,33 @@
 <div class="container">
-  <%= tabs_tag :open_tabs => {:id => 'tabs', :class => 'nav nav-tabs top-margin-20'} do |tab| %>
-      <%= tab.event 'Events', root_path, :class => 'nav-item' %>
-      <%= tab.participant 'Participants', '/participants', :class => 'nav-item' %>
-  <% end %>
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="/"> Events </a></li>
+    <li><a href="/participants"> Participants </a></li>
+  </ul>
 
-  <p id="notice" class="success top-margin-20"><%= notice %></p>
+  <div class="tab-content">
+    <p id="notice" class="success top-margin-20"><%= notice %></p>
 
-  <p>
-    <strong>Name:</strong>
-    <%= @event.name %>
-  </p>
+    <p>
+      <strong>Name:</strong>
+      <%= @event.name %>
+    </p>
 
-  <p>
-    <strong>Edition:</strong>
-    <%= @event.edition %>
-  </p>
+    <p>
+      <strong>Edition:</strong>
+      <%= @event.edition %>
+    </p>
 
-  <p>
-    <strong>Date:</strong>
-    <%= @event.date %>
-  </p>
+    <p>
+      <strong>Date:</strong>
+      <%= @event.date %>
+    </p>
 
-  <%= form_tag({:action => :generate}, multipart: true) do %>
-      <%= hidden_field_tag :event %>
-      <%= submit_tag "Generate and Send QR Codes", :class => 'btn btn-primary' %>
-  <% end %>
+    <%= form_tag({:action => :generate}, multipart: true) do %>
+        <%= hidden_field_tag :event %>
+        <%= submit_tag "Generate and Send QR Codes", :class => 'btn btn-primary' %>
+    <% end %>
 
-  <%= link_to 'Edit', edit_event_path(@event) %> |
-  <%= link_to 'Back', events_path %>
+    <%= link_to 'Edit', edit_event_path(@event) %> |
+    <%= link_to 'Back', events_path %>
+  </div>
 </div>

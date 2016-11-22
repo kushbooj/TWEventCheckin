@@ -1,7 +1,6 @@
 require 'rqrcode'
 require 'mail'
 class EventsController < ApplicationController
-  set_tab :event
   before_action :set_event, only: [:show, :edit, :update, :destroy, :generate]
 
   # GET /events

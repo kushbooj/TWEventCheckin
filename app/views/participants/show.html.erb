@@ -1,36 +1,38 @@
 <div class="container">
-  <%= tabs_tag :open_tabs => {:id => 'tabs', :class => 'nav nav-tabs top-margin-20'} do |tab| %>
-      <%= tab.event 'Events', root_path, :class => 'nav-item' %>
-      <%= tab.participant 'Participants', '/participants', :class => 'nav-item' %>
-  <% end %>
+  <ul class="nav nav-tabs">
+    <li><a href="/"> Events </a></li>
+    <li class="active"><a href="/participants"> Participants </a></li>
+  </ul>
 
-  <p id="notice" class="success top-margin-20"><%= notice %></p>
+  <div class="tab-content">
+    <p id="notice" class="success top-margin-20"><%= notice %></p>
 
-  <p>
-    <strong>Name:</strong>
-    <%= @participant.name %>
-  </p>
+    <p>
+      <strong>Name:</strong>
+      <%= @participant.name %>
+    </p>
 
-  <p>
-    <strong>Email:</strong>
-    <%= @participant.email %>
-  </p>
+    <p>
+      <strong>Email:</strong>
+      <%= @participant.email %>
+    </p>
 
-  <p>
-    <strong>Contact number:</strong>
-    <%= @participant.contact_number %>
-  </p>
+    <p>
+      <strong>Contact number:</strong>
+      <%= @participant.contact_number %>
+    </p>
 
-  <p>
-    <strong>From:</strong>
-    <%= @participant.from %>
-  </p>
+    <p>
+      <strong>From:</strong>
+      <%= @participant.from %>
+    </p>
 
-  <p>
-    <strong>Event:</strong>
-    <%= @participant.event %>
-  </p>
+    <p>
+      <strong>Event:</strong>
+      <%= @participant.event %>
+    </p>
 
-  <%= link_to 'Edit', edit_participant_path(@participant) %> |
-  <%= link_to 'Back', participants_path %>
+    <%= link_to 'Edit', edit_participant_path(@participant) %> |
+    <%= link_to 'Back', participants_path %>
+  </div>
 </div>
