@@ -84,21 +84,8 @@ class EventsController < ApplicationController
       qrcode.write(io)
       io.rewind
 
-      mail = Mail.new do
-        from 'kushboojain27kj@gmail.com'
-        to participant.email
-        subject 'Event QR Code'
-        body 'Scan the code for hassle free entry in'
-      end
-
-      mail.attachments['qrcode.png'] = {
-          :mime_type => 'image/png',
-          :content => io.read
-      }
-      mail.delivery_method :sendmail
-
-      mail.deliver
-    end
+      Emailer.send_mail(participant.email, io.read).deliver_later
+   end
   end
 
   private
